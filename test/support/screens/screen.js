@@ -9,6 +9,7 @@ class Screen {
 
         browser.touchAction([
             { action: 'press', x: width-50, y: high/2 },
+            // { action: 'wait', ms: 1000 },
             { action: 'moveTo', x: 50, y: high/2 },
             'release'
         ]);
