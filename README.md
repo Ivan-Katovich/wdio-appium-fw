@@ -15,6 +15,10 @@ Setup:
 ## Run tests:
 
     npm run test
+    
+## Parameters
+
+    --platform=android ( 'android' by default, 'ios' is also possible )
 
 ## Useful links
 ### UISelector strategies:

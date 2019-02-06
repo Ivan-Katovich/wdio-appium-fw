@@ -1,6 +1,8 @@
 
 class Screen {
-    constructor(){}
+    constructor(os){
+        this.os = os;
+    }
 
     turnOver(){
         const dims = driver.getSessions()[0].capabilities.deviceScreenSize.split('x');
@@ -24,15 +26,15 @@ class Screen {
     }
 
     getElementText(elementName){
-        return $(this.selectors[elementName].android).getText();
+        return $(this.selectors[elementName][this.os]).getText();
     }
 
     isElementDisplayed(elementName){
-        return $(this.selectors[elementName].android).isDisplayed();
+        return $(this.selectors[elementName][this.os]).isDisplayed();
     }
 
     clickElement(elementName){
-        $(this.selectors[elementName].android).click();
+        $(this.selectors[elementName][this.os]).click();
     }
 
     waitForElementVisible(elementName, timeout = 5000){

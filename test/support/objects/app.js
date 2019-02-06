@@ -4,6 +4,8 @@ const LoginScreen = require('./screens/loginScreen');
 
 class App {
     constructor(){
+        this.os = process.env.npm_config_platform ? process.env.npm_config_platform : 'android';
+        console.log(`testing of mobile app through '${this.os}' platform`);
         this.currentScreen = null;
         this.welcomScreenObj = null;
         this.loadingScreenObj = null;
@@ -17,22 +19,22 @@ class App {
             login: LoginScreen
         };
         if(!this[`${screenName}ScreenObj`]){
-            this[`${screenName}ScreenObj`] = new screens[screenName]();
+            this[`${screenName}ScreenObj`] = new screens[screenName](this.os);
         }
         this.currentScreen = this[`${screenName}ScreenObj`];
         return this.currentScreen;
     }
 
     get welcomeScreen(){
-        return this.welcomScreenObj ? this.welcomScreenObj : new WelcomeScreen();
+        return this.welcomScreenObj ? this.welcomScreenObj : new WelcomeScreen(this.os);
     }
 
     get loadingScreen(){
-        return this.loadingScreenObj ? this.loadingScreenObj : new LoadingScreen();
+        return this.loadingScreenObj ? this.loadingScreenObj : new LoadingScreen(this.os);
     }
 
     get loginScreen(){
-        return this.loginScreenObj ? this.loginScreenObj : new LoginScreen();
+        return this.loginScreenObj ? this.loginScreenObj : new LoginScreen(this.os);
     }
 }
 

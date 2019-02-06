@@ -1,8 +1,8 @@
 const Screen = require('./screen');
 
 class LoginScreen extends Screen {
-    constructor(){
-        super();
+    constructor(os){
+        super(os);
         this.selectors = {
             navigateBackArrow: {
                 android: 'android=new UiSelector().description("Navigate up")',

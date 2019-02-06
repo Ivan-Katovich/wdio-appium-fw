@@ -1,8 +1,8 @@
 const Screen = require('./screen');
 
 class WelcomeScreen extends Screen {
-    constructor(){
-        super();
+    constructor(os){
+        super(os);
         this.selectors = {
             blizzardLogo: {
                 android: 'android=new UiSelector().resourceId("com.blizzard.messenger:id/logo")',
