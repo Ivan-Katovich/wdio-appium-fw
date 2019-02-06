@@ -34,15 +34,6 @@ class WelcomeScreen extends Screen {
         }
     }
 
-    getElementText(elementName){
-        return $(this.selectors[elementName].android).getText();
-    }
-
-    isElementDisplayed(elementName){
-        return $(this.selectors[elementName].android).isDisplayed();
-    }
-
 }
-
 
 module.exports=WelcomeScreen;
