@@ -1,4 +1,10 @@
 const path = require('path');
+const fs = require('fs');
+const App = require('./test/support/objects/app');
+const allure = require('@wdio/allure-reporter').default;
+
+let app = null;
+let isFirst = true;
 
 exports.config = {
     //
@@ -107,7 +113,11 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter.html
-    reporters: ['spec'],
+    reporters: ['spec',['allure',{
+        outputDir: 'reports/allure-results',
+        disableWebdriverStepsReporting: true,
+        disableWebdriverScreenshotsReporting: false
+    }]],
     
     //
     // Options to be passed to Jasmine.
@@ -137,8 +147,17 @@ exports.config = {
      * @param {Object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      */
-    // onPrepare: function (config, capabilities) {
-    // },
+    onPrepare: function (config, capabilities) {
+        try{
+            fs.mkdirSync('reports');
+        }catch(err){}
+        try{
+            fs.mkdirSync('reports/allure-results');
+        }catch(err){}
+        try{
+            fs.mkdirSync('reports/screenshots');
+        }catch(err){}
+    },
     /**
      * Gets executed just before initialising the webdriver session and test framework. It allows you
      * to manipulate configurations depending on the capability or spec.
@@ -175,25 +194,41 @@ exports.config = {
      * @param {Object} test test details
      */
     // beforeTest: function (test) {
+    //     console.log('1111111111111111111');
+    //     if(!isFirst){
+    //         driver.reset();
+    //     }
+    //     app = new App();
+    //     isFirst = false;
+    //     console.log('22222222222222222222222');
     // },
     /**
      * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
      * beforeEach in Mocha)
      */
     // beforeHook: function () {
+    //     console.log('start');
     // },
     /**
      * Hook that gets executed _after_ a hook within the suite starts (e.g. runs after calling
      * afterEach in Mocha)
      */
     // afterHook: function () {
+    //     console.log('finish');
     // },
     /**
      * Function to be executed after a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
      * @param {Object} test test details
      */
-    // afterTest: function (test) {
-    // },
+    afterTest: function (test) {
+        // Can be done with only failed tests using 'test' parameter
+        const ssId = (100 + Math.random()*899).toFixed(0);
+        try{
+            browser.saveScreenshot(`./reports/screenshots/ss-${ssId}.png`);
+        }catch(err){
+            console.log(err.message);
+        }
+    },
     /**
      * Hook that gets executed after the suite has ended
      * @param {Object} suite suite details

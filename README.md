@@ -6,8 +6,6 @@ Framework based on webdriverIO + appium
 
 Preconditions: Appium server, Node.js
 
-    npm install -g gulp
-
 Setup:
 
     npm install
@@ -29,3 +27,5 @@ https://webdriver.io/docs/selectors.html
 http://webdriver.io/guide/getstarted/modes.html
 ### wdio config
 https://webdriver.io/docs/clioptions.html
+### allure
+https://docs.qameta.io/allure/#_report_generation

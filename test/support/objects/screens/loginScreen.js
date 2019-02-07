@@ -50,7 +50,23 @@ class LoginScreen extends Screen {
                 android: 'android=new UiSelector().resourceId("loginSupport")',
                 ios: 'ios=UIATarget...(selector for ios)'
             },
+            jsError: {
+                android: 'android=new UiSelector().resourceId("js-errors")',
+                ios: 'ios=UIATarget...(selector for ios)'
+            },
+            jsErrorText: {
+                android: 'android=new UiSelector().resourceId("js-errors")' +
+                '.childSelector(new UiSelector().className("android.view.View").index(1))',
+                ios: 'ios=UIATarget...(selector for ios)'
+            },
         }
+    }
+
+    logIn(accName,password){
+        $(this.selectors.accountName[this.os]).addValue(accName);
+        $(this.selectors.password[this.os]).addValue(password);
+        driver.hideKeyboard();
+        $(this.selectors.submitButton[this.os]).click();
     }
 
 }
