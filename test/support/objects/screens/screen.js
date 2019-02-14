@@ -37,6 +37,10 @@ class Screen {
         $(this.selectors[elementName][this.os]).click();
     }
 
+    getElementAttribute(elementName, attribute){
+        return $(this.selectors[elementName][this.os]).getAttribute(attribute);
+    }
+
     waitForElementVisible(elementName, timeout = 5000){
         // $(this.selectors[elementName].android).waitForDisplayed(timeout);
         browser.waitUntil(() => this.isElementDisplayed(elementName), timeout, `Element '${elementName}' is not displayed.`, 300);

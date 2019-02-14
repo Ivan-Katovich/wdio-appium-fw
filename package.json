@@ -4,7 +4,7 @@
   "description": "tests for android with appium + webdriver io",
   "main": "index.js",
   "scripts": {
-    "wdio": "./node_modules/.bin/wdio wdio.conf.js",
+    "wdio": "./node_modules/.bin/wdio test/configs/wdio.conf.js",
     "report": "./node_modules/.bin/allure generate reports/allure-results -o reports/allure-report --clean",
     "test": "npm-run-all wdio --continue-on-error report"
   },

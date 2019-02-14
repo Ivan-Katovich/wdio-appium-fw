@@ -1,10 +1,8 @@
 const path = require('path');
 const fs = require('fs');
-const App = require('./test/support/objects/app');
-const allure = require('@wdio/allure-reporter').default;
+const caps = require('./data/capabilities');
 
-let app = null;
-let isFirst = true;
+process.env.npm_config_platform = process.env.npm_config_platform ? process.env.npm_config_platform : 'android';
 
 exports.config = {
     //
@@ -57,14 +55,7 @@ exports.config = {
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://docs.saucelabs.com/reference/platforms-configurator
     //
-    capabilities: [{
-        platformName: 'Android',
-        appiumVersion: '1.10.0',
-        deviceName: 'myDevice',
-        app: path.resolve('./apkFiles/Battle.net Mobile Authenticator-8.apk'),
-        appWaitActivity: 'com.blizzard.messenger.ui.welcome.WelcomeActivity',
-        appWaitPackage: 'com.blizzard.messenger'
-    }],
+    capabilities: caps[process.env.npm_config_platform],
     //
     // ===================
     // Test Configurations
@@ -149,13 +140,13 @@ exports.config = {
      */
     onPrepare: function (config, capabilities) {
         try{
-            fs.mkdirSync('reports');
+            fs.mkdirSync(path.resolve('reports'));
         }catch(err){}
         try{
-            fs.mkdirSync('reports/allure-results');
+            fs.mkdirSync(path.resolve('reports/allure-results'));
         }catch(err){}
         try{
-            fs.mkdirSync('reports/screenshots');
+            fs.mkdirSync(path.resolve('reports/screenshots'));
         }catch(err){}
     },
     /**
@@ -224,7 +215,7 @@ exports.config = {
         // Can be done with only failed tests using 'test' parameter
         const ssId = (100 + Math.random()*899).toFixed(0);
         try{
-            browser.saveScreenshot(`./reports/screenshots/ss-${ssId}.png`);
+            browser.saveScreenshot(path.resolve(`./reports/screenshots/ss-${ssId}.png`));
         }catch(err){
             console.log(err.message);
         }

@@ -1,6 +1,5 @@
 const App = require('../../support/objects/app');
 const memory = require('../../support/memory');
-// const allure = require('@wdio/allure-reporter').default;
 
 describe('battle.net spec', () => {
 
@@ -46,7 +45,7 @@ describe('battle.net spec', () => {
         expect(app.welcomeScreen.getElementText('welcomeText')).toBe('See what your friends are playing!');
         expect(app.welcomeScreen.getElementText('infoText')).toBe('Quickly check which of your friends are online, in a game, and ready for an adventure.');
         expect(app.welcomeScreen.isElementDisplayed('loginButton')).toBe(true);
-        expect(app.welcomeScreen.getElementText('loginButtonText')).toBe('My Log In'); //failed
+        expect(app.welcomeScreen.getElementText('loginButtonText')).toBe('Log In');
         app.welcomeScreen.turnOver();
         expect(app.welcomeScreen.isElementDisplayed('blizzardLogo')).toBe(true);
         expect(app.welcomeScreen.isElementDisplayed('welcomeImage')).toBe(true);
@@ -68,7 +67,7 @@ describe('battle.net spec', () => {
         app.loadingScreen.waitForElementDisappeared('loadingSpinner',20000);
         app.loginScreen.logIn('123','password');
         expect(app.loginScreen.isElementDisplayed('jsError')).toBe(true);
-        expect(app.loginScreen.getElementText('jsErrorText')).toBe('My Blizzard Account usernames are email addresses.'); //fail to check report
+        expect(app.loginScreen.getElementAttribute('jsErrorText','contentDescription')).toBe('Blizzard Account usernames are email addresses.');
     });
 
 });

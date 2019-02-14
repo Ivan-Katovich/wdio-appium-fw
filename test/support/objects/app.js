@@ -4,7 +4,7 @@ const LoginScreen = require('./screens/loginScreen');
 
 class App {
     constructor(){
-        this.os = process.env.npm_config_platform ? process.env.npm_config_platform : 'android';
+        this.os = process.env.npm_config_platform;
         console.log(`testing of mobile app through '${this.os}' platform`);
         this.currentScreen = null;
         this.welcomScreenObj = null;
