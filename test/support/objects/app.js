@@ -7,9 +7,10 @@ class App {
         this.os = process.env.npm_config_platform;
         console.log(`testing of mobile app through '${this.os}' platform`);
         this.currentScreen = null;
-        this.welcomScreenObj = null;
-        this.loadingScreenObj = null;
-        this.loginScreenObj = null;
+        // this.welcomScreenObj = null;
+        // this.loadingScreenObj = null;
+        // this.loginScreenObj = null;
+        this.screenArray = [];
     }
 
     getScreen(screenName){
@@ -18,23 +19,63 @@ class App {
             loading: LoadingScreen,
             login: LoginScreen
         };
-        if(!this[`${screenName}ScreenObj`]){
-            this[`${screenName}ScreenObj`] = new screens[screenName](this.os);
+
+        let screen = this.screenArray.find((scr) => scr.constructor === screens[screenName]);
+
+        if(!screen){
+            screen = new screens[screenName](this.os);
+            this.screenArray.push(screen)
         }
-        this.currentScreen = this[`${screenName}ScreenObj`];
+        this.currentScreen = screen;
         return this.currentScreen;
     }
 
     get welcomeScreen(){
-        return this.welcomScreenObj ? this.welcomScreenObj : new WelcomeScreen(this.os);
+        let screen;
+        if (this.currentScreen && this.currentScreen.constructor === WelcomeScreen) {
+            screen = this.currentScreen;
+        } else {
+            screen = this.screenArray.find((scr) => scr.constructor === WelcomeScreen);
+            this.currentScreen = screen;
+        }
+        if(!screen){
+            screen = new WelcomeScreen(this.os);
+            this.screenArray.push(screen);
+            this.currentScreen = screen;
+        }
+        return screen;
     }
 
     get loadingScreen(){
-        return this.loadingScreenObj ? this.loadingScreenObj : new LoadingScreen(this.os);
+        let screen;
+        if (this.currentScreen && this.currentScreen.constructor === LoadingScreen) {
+            screen = this.currentScreen;
+        } else {
+            screen = this.screenArray.find((scr) => scr.constructor === LoadingScreen);
+            this.currentScreen = screen;
+        }
+        if(!screen){
+            screen = new LoadingScreen(this.os);
+            this.screenArray.push(screen);
+            this.currentScreen = screen;
+        }
+        return screen;
     }
 
     get loginScreen(){
-        return this.loginScreenObj ? this.loginScreenObj : new LoginScreen(this.os);
+        let screen;
+        if (this.currentScreen && this.currentScreen.constructor === LoginScreen) {
+            screen = this.currentScreen;
+        } else {
+            screen = this.screenArray.find((scr) => scr.constructor === LoginScreen);
+            this.currentScreen = screen;
+        }
+        if(!screen){
+            screen = new LoginScreen(this.os);
+            this.screenArray.push(screen);
+            this.currentScreen = screen;
+        }
+        return screen;
     }
 }
 
